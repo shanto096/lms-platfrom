@@ -2,6 +2,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors'); // CORS (Cross-Origin Resource Sharing) এর জন্য
+const connectDB = require('./lib/db');
 // const schoolRoutes = require('./routes/schoolRoutes'); // স্কুলের রাউটস ইম্পোর্ট করুন
 require('dotenv').config(); // .env ফাইল থেকে এনভায়রনমেন্ট ভেরিয়েবল লোড করার জন্য
 
@@ -12,7 +13,7 @@ const PORT = process.env.PORT || 5000;
 app.use(cors()); // সকল অরিজিন থেকে অনুরোধ গ্রহণ করার জন্য
 app.use(express.json()); // JSON বডি পার্স করার জন্য
 
-
+connectDB()
 
 // রাউটস
 // app.use('/api/schools', schoolRoutes);
