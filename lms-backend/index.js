@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors'); // CORS (Cross-Origin Resource Sharing) এর জন্য
 const connectDB = require('./lib/db');
-// const schoolRoutes = require('./routes/schoolRoutes'); // স্কুলের রাউটস ইম্পোর্ট করুন
+const schoolRoutes = require('./routes/schoolRoute'); // স্কুলের রাউটস ইম্পোর্ট করুন
 require('dotenv').config(); // .env ফাইল থেকে এনভায়রনমেন্ট ভেরিয়েবল লোড করার জন্য
 
 const app = express();
@@ -16,7 +16,7 @@ app.use(express.json()); // JSON বডি পার্স করার জন�
 connectDB()
 
 // রাউটস
-// app.use('/api/schools', schoolRoutes);
+app.use('/api/schools', schoolRoutes);
 
 // রুট রাউট (সাধারণত ফ্রন্টএন্ড অ্যাপ সার্ভ করার জন্য ব্যবহৃত হয়)
 app.get('/', (req, res) => {
