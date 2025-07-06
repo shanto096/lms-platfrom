@@ -1,6 +1,7 @@
 // এটি স্কুলের বিস্তারিত তথ্য প্রদর্শন করে।
 import React, { useState, useEffect } from 'react';
 import SchoolDisplay from '../components/SchoolDisplay';
+import Header from '../components/home/Header';
 
 
 function SchoolPage({ schoolId, navigateTo }) {
@@ -68,7 +69,8 @@ function SchoolPage({ schoolId, navigateTo }) {
   }
 
   return (
-    <div className="flex justify-center items-center w-full">
+    <div className="w-full">
+        <Header schoolName={schoolData.school.name} subtitle={schoolData.school.description} imageUrl={schoolData.school.imageUrl} />
       <div className="bg-card-bg rounded-default shadow-custom p-8 text-center w-full max-w-md">
         <h1 className="text-primary mb-4 text-3xl font-bold">স্কুলের বিস্তারিত তথ্য</h1>
         {schoolData && <SchoolDisplay school={schoolData.school} schoolInfo={schoolData.schoolInfo} />}

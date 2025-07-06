@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CreateSchoolPage from './pages/CreateSchoolPage';
-import SchoolPage from './pages/SchoolPage';
-import HomePage from './pages/Home';
+
+import HomePage from './pages/HomePage';
 
 
 function App() {
@@ -70,31 +70,17 @@ function App() {
   if (currentPath === '/create-school') {
     content = <CreateSchoolPage navigateTo={navigateTo} />;
   } else if (schoolId) {
-    content = <SchoolPage schoolId={schoolId} navigateTo={navigateTo} />;
+    content = <HomePage schoolId={schoolId} navigateTo={navigateTo} />;
   } else {
-    content = <HomePage navigateTo={navigateTo} />;
+    content =<h1>nai</h1>;
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen p-5 bg-bg-light text-text-dark font-sans">
-      <div className="w-full max-w-4xl mx-auto p-5 box-border">
-        <nav className="mb-8 flex justify-center space-x-4">
-          <button
-            onClick={() => navigateTo('/')}
-            className="px-4 py-2 bg-primary text-white rounded-default hover:bg-blue-600 transition-colors duration-200"
-          >
-            হোম
-          </button>
-          <button
-            onClick={() => navigateTo('/create-school')}
-            className="px-4 py-2 bg-secondary text-white rounded-default hover:bg-teal-500 transition-colors duration-200"
-          >
-            স্কুল তৈরি করুন (অ্যাডমিন)
-          </button>
-        </nav>
+   
+      <div className="w-full  text-text-dark font-sans">
         {content}
       </div>
-    </div>
+   
   );
 }
 
