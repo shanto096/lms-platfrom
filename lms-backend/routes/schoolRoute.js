@@ -1,6 +1,6 @@
 // এটি স্কুলের API রাউটগুলি সংজ্ঞায়িত করে।
 const express = require('express');
-const { findSchoolByName, getSchoolById, createSchool } = require('../controllers/schoolContorller');
+const { findSchoolByName, getSchoolById, createSchool, findSchoolBySubdomain } = require('../controllers/schoolContorller');
 const router = express.Router();
 // const schoolController = require('../controllers/schoolController');
 
@@ -16,5 +16,8 @@ router.get('/:id', getSchoolById);
 // উদাহরণ: POST /api/schools
 router.post('/', createSchool);
 
+// সাবডোমেইন দ্বারা স্কুল খুঁজে বের করার রাউট
+// উদাহরণ: GET /api/schools/subdomain/mohadevpursorbomongola
+router.get('/subdomain/:subdomain', findSchoolBySubdomain);
 
 module.exports = router;

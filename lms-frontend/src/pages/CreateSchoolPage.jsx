@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 function CreateSchoolPage({ navigateTo }) {
   const [formData, setFormData] = useState({
     name: '',
+    subdomain: '',
     address: '',
     city: '',
     state: '',
@@ -69,7 +70,7 @@ function CreateSchoolPage({ navigateTo }) {
         // Optionally, navigate to the newly created school's page
         // navigateTo(`/${data.school._id}`);
         setFormData({ // Clear form after successful submission
-            name: '', address: '', city: '', state: '', zipCode: '',
+            name: '', subdomain: '', address: '', city: '', state: '', zipCode: '',
             contactEmail: '', contactPhone: '', description: '', principalName: '',
             establishedDate: '', totalStudents: '', totalTeachers: '',
             lmsEnabled: false, lmsUrl: '', facilities: '' // superAdminKey সরানো হয়েছে
@@ -103,6 +104,19 @@ function CreateSchoolPage({ navigateTo }) {
               onChange={handleChange}
               className="w-full p-2 border border-border-light rounded-default focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
               required
+            />
+          </div>
+          <div>
+            <label htmlFor="subdomain" className="block text-text-dark text-sm font-bold mb-2">সাবডোমেইন:</label>
+            <input
+              type="text"
+              id="subdomain"
+              name="subdomain"
+              value={formData.subdomain}
+              onChange={handleChange}
+              className="w-full p-2 border border-border-light rounded-default focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+              required
+              placeholder="যেমন: mohadevpursorbomongola"
             />
           </div>
           <div>

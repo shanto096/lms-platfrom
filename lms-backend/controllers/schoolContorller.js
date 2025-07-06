@@ -59,6 +59,7 @@ exports.getSchoolById = async(req, res) => {
 exports.createSchool = async(req, res) => {
     const {
         name,
+        subdomain,
         address,
         city,
         state,
@@ -79,6 +80,7 @@ exports.createSchool = async(req, res) => {
         // নতুন স্কুল তৈরি করুন
         const newSchool = new School({
             name,
+            subdomain,
             address,
             city,
             state,
@@ -114,6 +116,22 @@ exports.createSchool = async(req, res) => {
                 message: 'School with this name or email already exists.'
             });
         }
+        res.status(500).send('Server Error');
+    }
+};
+
+// সাবডোমেইন দ্বারা স্কুল খুঁজে বের করুন এবং বিস্তারিত তথ্য ফেরত দিন
+exports.findSchoolBySubdomain = async(req, res) => {
+    const { subdomain } = req.params;
+    try {
+        const school = await School.findOne({ subdomain: subdomain.toLowerCase() });
+        if (!school) {
+            return res.status(404).json({ message: 'School not found' });
+        }
+        const schoolInfo = await SchoolInfo.findOne({ school: school._id });
+        res.json({ school, schoolInfo });
+    } catch (err) {
+        console.error(err.message);
         res.status(500).send('Server Error');
     }
 };

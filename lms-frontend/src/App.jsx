@@ -22,6 +22,30 @@ function App() {
       setSchoolId(pathParts[1]);
     } else {
       setSchoolId(null);
+      // সাবডোমেইন থেকে স্কুল খুঁজে বের করার চেষ্টা করুন
+      const hostname = window.location.hostname;
+      const isLocal = hostname === 'localhost' || hostname === '127.0.0.1';
+      const isVercel = hostname.endsWith('vercel.app');
+      let subdomain = null;
+      if (isVercel) {
+        const parts = hostname.split('.');
+        if (parts.length > 2) {
+          subdomain = parts[0];
+        }
+      } else if (!isLocal && hostname.split('.').length > 1) {
+        subdomain = hostname.split('.')[0];
+      }
+      if (subdomain) {
+        // সাবডোমেইন দিয়ে ব্যাকএন্ডে রিকুয়েস্ট পাঠান
+        fetch(`http://localhost:5000/api/schools/subdomain/${subdomain}`)
+          .then(res => res.json())
+          .then(data => {
+            if (data && data.school && data.school._id) {
+              navigateTo(`/${data.school._id}`);
+            }
+          })
+          .catch(() => {});
+      }
     }
 
     return () => {

@@ -34,6 +34,13 @@ const SchoolSchema = new mongoose.Schema({
     contactPhone: {
         type: String
     },
+    subdomain: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+        lowercase: true
+    },
     createdAt: {
         type: Date,
         default: Date.now
