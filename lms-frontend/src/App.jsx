@@ -56,6 +56,7 @@ function App() {
   // ব্রাউজারের URL পরিবর্তন করার জন্য একটি ফাংশন
   const navigateTo = (path) => {
     window.history.pushState({}, '', path);
+    console.log(path);
     setCurrentPath(path);
     const pathParts = path.split('/');
     if (pathParts.length > 1 && pathParts[1].length === 24) {
