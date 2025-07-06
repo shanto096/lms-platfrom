@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import CreateSchoolPage from './pages/CreateSchoolPage';
 
 import HomePage from './pages/HomePage';
-
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 function App() {
-  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+    const [currentPath, setCurrentPath] = useState(window.location.pathname);
   const [schoolId, setSchoolId] = useState(null);
-
+  console.log('schoolId',schoolId);
   useEffect(() => {
     const handlePopState = () => {
       setCurrentPath(window.location.pathname);
@@ -18,8 +18,11 @@ function App() {
 
     // URL থেকে স্কুলের আইডি এক্সট্রাক্ট করুন যদি থাকে
     const pathParts = window.location.pathname.split('/');
+    console.log('pathParts',pathParts);
+    
     if (pathParts.length > 1 && pathParts[1].length === 24) { // MongoDB ObjectId length is 24
       setSchoolId(pathParts[1]);
+      
     } else {
       setSchoolId(null);
       // সাবডোমেইন থেকে স্কুল খুঁজে বের করার চেষ্টা করুন
@@ -36,6 +39,8 @@ function App() {
         subdomain = hostname.split('.')[0];
       }
       if (subdomain) {
+        console.log('subdomain',subdomain);
+        
         // সাবডোমেইন দিয়ে ব্যাকএন্ডে রিকুয়েস্ট পাঠান
         fetch(`http://localhost:5000/api/schools/subdomain/${subdomain}`)
           .then(res => res.json())
@@ -65,24 +70,31 @@ function App() {
       setSchoolId(null);
     }
   };
-
+  const sch='6869560179b6ae70c79fdd50'
   // রাউটিং লজিক
-  let content;
-  if (currentPath === '/create-school') {
-    content = <CreateSchoolPage navigateTo={navigateTo} />;
-  } else if (schoolId) {
-    content = <HomePage schoolId={schoolId} navigateTo={navigateTo} />;
-  } else {
-    content =<h1>nai</h1>;
-  }
-
+ 
   return (
-   
-      <div className="w-full  text-text-dark font-sans">
-        {content}
-      </div>
+    <Router>
+      <Routes>
+        {/* Exact path for the home page */}
+        <Route path="/" element={<HomePage schoolId={sch} navigateTo={navigateTo}/>} />
+
+          {/* Route for the about page */}
+          <Route path="/create-school" element={<CreateSchoolPage navigateTo={navigateTo} />} />
+
+          {/* Route for the contact page */}
+          {/* <Route path="/contact" element={<ContactPage />} /> */}
+
+          {/* Catch-all route for any undefined paths (404 Page) */}
+          <Route path="*" element={<h1>404 - Page Not Found</h1>} />
+        </Routes>
+      </Router>
    
   );
 }
 
 export default App;
+
+   
+   
+ 
