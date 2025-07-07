@@ -11,7 +11,7 @@ const Header = ({ schoolName, subtitle, imageUrl }) => {
             Welcome to <span className="text-blue-600">{schoolName}</span>
           </h1>
           <p className="text-lg text-gray-600 mb-6">
-            {subtitle || "Empowering students for a brighter future."}
+            {subtitle || "Empowering students for a brighter future. school"}
           </p>
           <button className="bg-blue-600 text-white px-6 py-3 rounded-xl shadow-md hover:bg-blue-700 transition">
             Learn More
