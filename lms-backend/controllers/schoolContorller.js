@@ -63,17 +63,10 @@ exports.createSchool = async(req, res) => {
         address,
         city,
         state,
-        zipCode,
-        contactEmail,
         contactPhone,
-        description,
-        principalName,
-        establishedDate,
         totalStudents,
         totalTeachers,
-        lmsEnabled,
-        lmsUrl,
-        facilities
+
     } = req.body;
 
     try {
@@ -84,23 +77,18 @@ exports.createSchool = async(req, res) => {
             address,
             city,
             state,
-            zipCode,
-            contactEmail,
-            contactPhone
+            contactPhone,
+            totalStudents,
+            totalTeachers
         });
         await newSchool.save();
 
         // নতুন স্কুলের জন্য SchoolInfo তৈরি করুন
         const newSchoolInfo = new SchoolInfo({
             school: newSchool._id,
-            description,
-            principalName,
-            establishedDate,
+
             totalStudents,
             totalTeachers,
-            lmsEnabled,
-            lmsUrl,
-            facilities
         });
         await newSchoolInfo.save();
 

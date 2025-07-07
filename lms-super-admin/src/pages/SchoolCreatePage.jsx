@@ -7,17 +7,10 @@ function CreateSchoolPage({ navigateTo }) {
     address: '',
     city: '',
     state: '',
-    zipCode: '',
-    contactEmail: '',
     contactPhone: '',
-    description: '',
-    principalName: '',
-    establishedDate: '',
     totalStudents: '',
     totalTeachers: '',
-    lmsEnabled: false,
-    lmsUrl: '',
-    facilities: '', // Comma separated string
+    // Comma separated string
     // superAdminKey: '', // সুপার অ্যাডমিন কী এখন আর ফ্রন্টএন্ড ফর্মে প্রয়োজন নেই
   });
 
@@ -44,9 +37,7 @@ function CreateSchoolPage({ navigateTo }) {
         ...formData,
         totalStudents: parseInt(formData.totalStudents) || 0,
         totalTeachers: parseInt(formData.totalTeachers) || 0,
-        facilities: formData.facilities.split(',').map(f => f.trim()).filter(f => f !== ''),
-        // establishedDate should be a valid Date object or ISO string
-        establishedDate: formData.establishedDate ? new Date(formData.establishedDate).toISOString() : undefined,
+       
       };
 
       // superAdminKey এখন আর payload থেকে সরানোর প্রয়োজন নেই কারণ এটি ফর্মে নেই
@@ -70,17 +61,16 @@ function CreateSchoolPage({ navigateTo }) {
         // Optionally, navigate to the newly created school's page
         // navigateTo(`/${data.school._id}`);
         setFormData({ // Clear form after successful submission
-            name: '', subdomain: '', address: '', city: '', state: '', zipCode: '',
-            contactEmail: '', contactPhone: '', description: '', principalName: '',
-            establishedDate: '', totalStudents: '', totalTeachers: '',
-            lmsEnabled: false, lmsUrl: '', facilities: '' // superAdminKey সরানো হয়েছে
+            name: '', subdomain: '', address: '', city: '', state: '', contactPhone: '',
+          totalStudents: '', totalTeachers: '',
         });
       } else {
         setError(data.message || 'স্কুল তৈরি করতে ব্যর্থ হয়েছে।');
         setMessage('');
       }
     } catch (err) {
-      console.error('Error creating school:', err);
+        console.log(err);
+    //   console.error('Error creating school:', err);
       setError('সার্ভারের সাথে সংযোগে সমস্যা হয়েছে।');
       setMessage('');
     } finally {
@@ -155,30 +145,8 @@ function CreateSchoolPage({ navigateTo }) {
               required
             />
           </div>
-          <div>
-            <label htmlFor="zipCode" className="block text-text-dark text-sm font-bold mb-2">পোস্ট কোড:</label>
-            <input
-              type="text"
-              id="zipCode"
-              name="zipCode"
-              value={formData.zipCode}
-              onChange={handleChange}
-              className="w-full p-2 border border-border-light rounded-default focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="contactEmail" className="block text-text-dark text-sm font-bold mb-2">যোগাযোগের ইমেল:</label>
-            <input
-              type="email"
-              id="contactEmail"
-              name="contactEmail"
-              value={formData.contactEmail}
-              onChange={handleChange}
-              className="w-full p-2 border border-border-light rounded-default focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
-              required
-            />
-          </div>
+         
+         
           <div>
             <label htmlFor="contactPhone" className="block text-text-dark text-sm font-bold mb-2">যোগাযোগের ফোন:</label>
             <input
@@ -192,39 +160,9 @@ function CreateSchoolPage({ navigateTo }) {
           </div>
 
           {/* School Info Details */}
-          <div className="md:col-span-2">
-            <label htmlFor="description" className="block text-text-dark text-sm font-bold mb-2">বর্ণনা:</label>
-            <textarea
-              id="description"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              rows="3"
-              className="w-full p-2 border border-border-light rounded-default focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
-            ></textarea>
-          </div>
-          <div>
-            <label htmlFor="principalName" className="block text-text-dark text-sm font-bold mb-2">অধ্যক্ষের নাম:</label>
-            <input
-              type="text"
-              id="principalName"
-              name="principalName"
-              value={formData.principalName}
-              onChange={handleChange}
-              className="w-full p-2 border border-border-light rounded-default focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
-            />
-          </div>
-          <div>
-            <label htmlFor="establishedDate" className="block text-text-dark text-sm font-bold mb-2">প্রতিষ্ঠাকাল:</label>
-            <input
-              type="date"
-              id="establishedDate"
-              name="establishedDate"
-              value={formData.establishedDate}
-              onChange={handleChange}
-              className="w-full p-2 border border-border-light rounded-default focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
-            />
-          </div>
+          
+    
+         
           <div>
             <label htmlFor="totalStudents" className="block text-text-dark text-sm font-bold mb-2">মোট শিক্ষার্থী:</label>
             <input
@@ -247,42 +185,8 @@ function CreateSchoolPage({ navigateTo }) {
               className="w-full p-2 border border-border-light rounded-default focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
             />
           </div>
-          <div className="md:col-span-2 flex items-center">
-            <input
-              type="checkbox"
-              id="lmsEnabled"
-              name="lmsEnabled"
-              checked={formData.lmsEnabled}
-              onChange={handleChange}
-              className="mr-2 h-4 w-4 text-primary rounded focus:ring-primary"
-            />
-            <label htmlFor="lmsEnabled" className="text-text-dark text-sm font-bold">LMS সক্ষম?</label>
-          </div>
-          {formData.lmsEnabled && (
-            <div className="md:col-span-2">
-              <label htmlFor="lmsUrl" className="block text-text-dark text-sm font-bold mb-2">LMS URL:</label>
-              <input
-                type="url"
-                id="lmsUrl"
-                name="lmsUrl"
-                value={formData.lmsUrl}
-                onChange={handleChange}
-                className="w-full p-2 border border-border-light rounded-default focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
-              />
-            </div>
-          )}
-          <div className="md:col-span-2">
-            <label htmlFor="facilities" className="block text-text-dark text-sm font-bold mb-2">সুবিধাদি (কমা দ্বারা পৃথক করুন):</label>
-            <input
-              type="text"
-              id="facilities"
-              name="facilities"
-              value={formData.facilities}
-              onChange={handleChange}
-              className="w-full p-2 border border-border-light rounded-default focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
-              placeholder="যেমন: Library, Computer Lab, Playground"
-            />
-          </div>
+         
+        
 
           {/* Super Admin Key (removed as per request) */}
           {/* <div className="md:col-span-2 mt-4">
