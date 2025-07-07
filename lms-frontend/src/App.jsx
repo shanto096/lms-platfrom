@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import CreateSchoolPage from './pages/CreateSchoolPage';
+
 
 import HomePage from './pages/HomePage';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
@@ -70,7 +70,7 @@ function App() {
       setSchoolId(null);
     }
   };
-  const sch='6869560179b6ae70c79fdd50'
+  const sch='686be910dde25475ac28a559'
   // রাউটিং লজিক
  
   return (
@@ -80,7 +80,6 @@ function App() {
         <Route path="/" element={<HomePage schoolId={sch} navigateTo={navigateTo}/>} />
 
           {/* Route for the about page */}
-          <Route path="/create-school" element={<CreateSchoolPage navigateTo={navigateTo} />} />
 
           {/* Route for the contact page */}
           {/* <Route path="/contact" element={<ContactPage />} /> */}
