@@ -116,8 +116,13 @@ exports.findSchoolBySubdomain = async(req, res) => {
         if (!school) {
             return res.status(404).json({ message: 'School not found' });
         }
+
+        // The school ID is available here:
+        const schoolId = school._id;
+        console.log("Found School ID:", schoolId); // You can log it or use it as needed
+
         const schoolInfo = await SchoolInfo.findOne({ school: school._id });
-        res.json({ school, schoolInfo });
+        res.json({ schoolId, schoolInfo });
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');

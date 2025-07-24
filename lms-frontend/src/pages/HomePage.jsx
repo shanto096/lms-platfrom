@@ -4,7 +4,7 @@ import SchoolDisplay from '../components/SchoolDisplay';
 import Header from '../components/home/Header';
 
 
-function SchoolPage({ schoolId, navigateTo }) {
+function SchoolPage({ schoolId}) {
   const [schoolData, setSchoolData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -38,9 +38,7 @@ function SchoolPage({ schoolId, navigateTo }) {
     }
   }, [schoolId]);
 
-  const handleBackToHome = () => {
-    navigateTo('/');
-  };
+ 
 
   if (loading) {
     return (
@@ -57,12 +55,6 @@ function SchoolPage({ schoolId, navigateTo }) {
       <div className="flex justify-center items-center w-full">
         <div className="bg-card-bg rounded-default shadow-custom p-8 text-center w-full max-w-md">
           <p className="text-error-red">{error}</p>
-          <button
-            onClick={handleBackToHome}
-            className="w-full max-w-[200px] py-3 px-6 border-none rounded-default bg-gray-600 text-white text-base cursor-pointer transition-all duration-300 ease-in-out hover:translate-y-[-2px] hover:opacity-90 active:translate-y-0 mt-5"
-          >
-            হোমপেজে ফিরে যান
-          </button>
         </div>
       </div>
     );
@@ -74,12 +66,7 @@ function SchoolPage({ schoolId, navigateTo }) {
       <div className="bg-card-bg rounded-default shadow-custom p-8 text-center w-full max-w-md">
         <h1 className="text-primary mb-4 text-3xl font-bold">স্কুলের বিস্তারিত তথ্য</h1>
         {schoolData && <SchoolDisplay school={schoolData.school} schoolInfo={schoolData.schoolInfo} />}
-        <button
-          onClick={handleBackToHome}
-          className="w-full max-w-[200px] py-3 px-6 border-none rounded-default bg-gray-600 text-white text-base cursor-pointer transition-all duration-300 ease-in-out hover:translate-y-[-2px] hover:opacity-90 active:translate-y-0 mt-5"
-        >
-          হোমপেজে ফিরে যান
-        </button>
+       
       </div>
     </div>
   );
