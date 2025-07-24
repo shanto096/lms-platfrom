@@ -1,6 +1,5 @@
 // এটি স্কুলের বিস্তারিত তথ্য প্রদর্শন করে।
 import React, { useState, useEffect } from 'react';
-import SchoolDisplay from '../components/SchoolDisplay';
 import Header from '../components/home/Header';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -16,14 +15,24 @@ function SchoolPage({ schoolId}) {
       setLoading(true);
       setError('');
       try {
-        const response = await fetch(`http://localhost:5000/api/schools/${schoolId}`);
-        const data = await response.json();
 
-        if (response.ok) {
-          setSchoolData(data);
-        } else {
-          setError(data.message || 'স্কুলের তথ্য লোড করা যায়নি।');
+        // Fetch school info data using the new route
+        const schoolInfoResponse = await fetch(`http://localhost:5000/api/schools/info/${schoolId}`);
+        const schoolInfoData = await schoolInfoResponse.json();
+        console.log(schoolInfoData);
+        
+
+        if (!schoolInfoResponse.ok) {
+          setError(schoolInfoData.message || 'স্কুলের বিস্তারিত তথ্য লোড করা যায়নি।');
+          setLoading(false);
+          return;
         }
+
+        setSchoolData({
+          schoolInfo: schoolInfoData.schoolInfo 
+        });
+        console.log({ schoolInfo: schoolInfoData.schoolInfo });
+
       } catch (err) {
         console.error('Error fetching school details:', err);
         setError('সার্ভারের সাথে সংযোগে সমস্যা হয়েছে।');
@@ -65,12 +74,8 @@ function SchoolPage({ schoolId}) {
   return (
     <div className="w-full">
       <Navbar/>
-      <Header schoolName={schoolData.school.name} subtitle={schoolData.school.description} imageUrl={schoolData.school.imageUrl} />
-      <div className="bg-card-bg rounded-default shadow-custom p-8 text-center w-full max-w-md">
-        <h1 className="text-primary mb-4 text-3xl font-bold">স্কুলের বিস্তারিত তথ্য</h1>
-        {schoolData && <SchoolDisplay school={schoolData.school} schoolInfo={schoolData.schoolInfo} />}
-      
-      </div>
+      <Header schoolInfo={schoolData?.schoolInfo} />
+     
        <Footer/>
     </div>
   );

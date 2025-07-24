@@ -5,6 +5,7 @@ const SchoolInfo = require("../models/schoolInfo");
 
 
 // আইডি দ্বারা স্কুলের বিস্তারিত তথ্য পান
+// এটিকে এমনভাবে আপডেট করা উচিত যাতে এটি schoolInfo মডেল থেকে বিস্তারিত তথ্যও নিয়ে আসে
 exports.getSchoolById = async(req, res) => {
     const {
         id
@@ -21,6 +22,21 @@ exports.getSchoolById = async(req, res) => {
         res.json({
             school,
         });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+};
+
+// স্কুল আইডি দ্বারা স্কুলের বিস্তারিত তথ্য (SchoolInfo) পান
+exports.getSchoolInfoBySchoolId = async(req, res) => {
+    const { schoolId } = req.params; // URL থেকে স্কুলের আইডি নিন
+    try {
+        const schoolInfo = await SchoolInfo.findOne({ school: schoolId });
+        if (!schoolInfo) {
+            return res.status(404).json({ message: 'School information not found' });
+        }
+        res.json({ schoolInfo });
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
@@ -55,6 +71,12 @@ exports.createSchool = async(req, res) => {
         });
         await newSchool.save();
 
+        // Create a new SchoolInfo document associated with the new school
+        const newSchoolInfo = new SchoolInfo({
+            school: newSchool._id,
+            schoolName: newSchool.name, // Optionally set schoolName from newSchool.name
+        });
+        await newSchoolInfo.save();
 
 
         res.status(201).json({
