@@ -4,9 +4,7 @@ const { findSchoolByName, getSchoolById, createSchool, findSchoolBySubdomain } =
 const router = express.Router();
 // const schoolController = require('../controllers/schoolController');
 
-// স্কুলের নাম দ্বারা স্কুল খুঁজে বের করার রাউট
-// উদাহরণ: GET /api/schools/find/mohadevpursorbomongola
-router.get('/find/:name', findSchoolByName);
+
 
 // আইডি দ্বারা স্কুলের বিস্তারিত তথ্য পাওয়ার রাউট
 // উদাহরণ: GET /api/schools/:id

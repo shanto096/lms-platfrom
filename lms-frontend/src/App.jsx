@@ -47,9 +47,12 @@ function App() {
                 fetch(`http://localhost:5000/api/schools/subdomain/${subdomain}`)
                     .then(res => res.json())
                     .then(data => {
-                        if (data && data.school && data.school._id) {
-                            // স্কুল আইডি পেলে URL আপডেট করুন
-                            navigateTo(`/${data.school._id}`);
+
+                      
+                        if (data && data.schoolId) {
+                            setSchoolId(data.schoolId)
+                            
+                            
                         } else {
                             // স্কুল না পেলে ডেমো আইডি ব্যবহার করুন বা একটি ডিফল্ট দেখান
                             setSchoolId(demoSchoolId); // অথবা অন্য কোনো ফলব্যাক

@@ -3,30 +3,6 @@
 const School = require("../models/school");
 const SchoolInfo = require("../models/schoolInfo");
 
-// স্কুলের নাম দ্বারা স্কুল খুঁজে বের করুন এবং আইডি ফেরত দিন
-exports.findSchoolByName = async(req, res) => {
-    const {
-        name
-    } = req.params; // URL থেকে স্কুলের নাম নিন
-    try {
-        const school = await School.findOne({
-            name: name.toLowerCase()
-        }); // কেস-ইনসেনসিটিভ অনুসন্ধানের জন্য
-
-        if (!school) {
-            return res.status(404).json({
-                message: 'School not found'
-            });
-        }
-        // স্কুল পাওয়া গেলে, স্কুলের আইডি ফেরত দিন
-        res.json({
-            schoolId: school._id
-        });
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
-    }
-};
 
 // আইডি দ্বারা স্কুলের বিস্তারিত তথ্য পান
 exports.getSchoolById = async(req, res) => {
@@ -41,13 +17,9 @@ exports.getSchoolById = async(req, res) => {
             });
         }
 
-        const schoolInfo = await SchoolInfo.findOne({
-            school: id
-        });
         // স্কুলের তথ্য এবং বিস্তারিত তথ্য একসাথে ফেরত দিন
         res.json({
             school,
-            schoolInfo
         });
     } catch (err) {
         console.error(err.message);
@@ -83,19 +55,11 @@ exports.createSchool = async(req, res) => {
         });
         await newSchool.save();
 
-        // নতুন স্কুলের জন্য SchoolInfo তৈরি করুন
-        const newSchoolInfo = new SchoolInfo({
-            school: newSchool._id,
 
-            totalStudents,
-            totalTeachers,
-        });
-        await newSchoolInfo.save();
 
         res.status(201).json({
             message: 'School created successfully',
             school: newSchool,
-            schoolInfo: newSchoolInfo
         });
     } catch (err) {
         console.error(err.message);
@@ -120,9 +84,7 @@ exports.findSchoolBySubdomain = async(req, res) => {
         // The school ID is available here:
         const schoolId = school._id;
         console.log("Found School ID:", schoolId); // You can log it or use it as needed
-
-        const schoolInfo = await SchoolInfo.findOne({ school: school._id });
-        res.json({ schoolId, schoolInfo });
+        res.json({ schoolId });
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
