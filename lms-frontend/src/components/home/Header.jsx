@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from '../../assets/img/png-transparent-beautiful-natural-border-beautiful-natural-frame.png';
 const Header = ({ schoolInfo }) => {
   return (
     <section className="w-full bg-white py-12 px-6 md:px-16">

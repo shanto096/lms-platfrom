@@ -54,7 +54,7 @@ const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
   if (!isOpen) return null; // যদি মডাল খোলা না থাকে, তাহলে কিছু রেন্ডার করবে না
 
   return (
-    <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 p-4 font-inter">
+    <div className="fixed inset-0 bg-gray-400 bg-opacity-50 flex items-center justify-center z-50 p-4 font-inter">
       {/* মডাল কন্টেন্ট */}
       <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-md relative animate-fade-in-up">
         {/* ক্লোজ বাটন */}

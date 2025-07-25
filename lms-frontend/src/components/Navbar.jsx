@@ -1,7 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import LoginModal from './LoginModal'; // Import LoginModal
 
 const Navbar = () => {
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
+  const handleOpenLoginModal = () => {
+    setIsLoginModalOpen(true);
+  };
+
+  const handleCloseLoginModal = () => {
+    setIsLoginModalOpen(false);
+  };
+
+  const handleLoginSuccess = (userId) => {
+    console.log(`User ${userId} logged in successfully!`);
+    // Here you might want to update the UI to show logged-in state,
+    // e.g., change Login/Register buttons to User Profile/Logout
+  };
+
   return (
     <nav className="bg-gray-800 p-4 shadow-md">
       <div className="container mx-auto flex justify-between items-center">
@@ -19,7 +36,8 @@ const Navbar = () => {
 
         {/* Auth Buttons - Still regular buttons as they might trigger a modal or API call */}
         <div className="hidden md:flex space-x-4">
-          <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300">
+          <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300"
+                  onClick={handleOpenLoginModal}>
             Login
           </button>
           <button className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300">
@@ -36,6 +54,11 @@ const Navbar = () => {
           </button>
         </div>
       </div>
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={handleCloseLoginModal}
+        onLoginSuccess={handleLoginSuccess}
+      />
     </nav>
   );
 };
